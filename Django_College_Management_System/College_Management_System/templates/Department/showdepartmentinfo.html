@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}
+    <title>Show Department Page</title>
+{% endblock %}
+{% block search %}
+    <ul class="navbar-nav ml-auto ">
+        <form method="post" class="form-inline" style="margin-right:auto">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="search" name="search1" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success " type="submit">Department</button>
+        </form>
+    </ul>
+{% endblock %}
+{% block content %}
+
+    <h1 style="text-align:center;color:blue">Department Details</h1>
+    <table class="table-active" style="width:90%;margin:auto">
+        <tr >
+            <th>ID</th>
+            <th>DEPARTMENT NAME</th>
+            <th>SUBJECT</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+            <th>PROFESSOR LIST</th>
+            <th>STUDENT LIST</th>
+
+        </tr>
+        {% for department in department_obj %}
+            <tr >
+                <th>{{department.department_id}}</th>
+                <td>{{department.department_name}}</td>
+                <td>{{department.subject}}</td>
+                <th><a href="{% url 'update_department' department.department_id %}">UPDATE</a></th>
+                <th><a href="{% url 'delete_department' department.department_id %}">DELETE</a></th>
+                <td><a href="{% url 'show_professor' %}"><button class="btn btn-info">Prof_list</button></a></td>
+                <td><a href="{% url 'show_student' %}"><button class="btn btn-info">Student_list</button></a></td>
+
+            </tr>
+
+        {% endfor %}
+
+
+    </table>
+    <br>
+    <a href="{% url 'add_department' %}"><button class="btn btn-success" style="margin-left:4.5%">ADD DEPARTMENT</button></a>
+{% endblock %}

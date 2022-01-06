@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}
+    <title>Show Student Page</title>
+{% endblock %}
+
+{% block search %}
+    <ul class="navbar-nav ml-auto ">
+        <form method="post" class="form-inline" style="margin-right:auto">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="search" name="search1" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success " type="submit">Student</button>
+        </form>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center;color:blue">Student info</h1>
+    <table class="table-active" style="width:90%;margin:auto">
+        <tr >
+            <th>DEPARTMENT ID</th>
+            <th>ROLL NO</th>
+            <th>STUDENT NAME</th>
+            <th>marks</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+
+        </tr>
+        {% for student in student_obj %}
+            <tr >
+                <td>{{student.department_id}}</td>
+                <td>{{student.roll_no}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.marks}}</td>
+                <th><a href="{% url 'update_student' student.roll_no %}">UPDATE</a></th>
+                <th><a href="{% url 'delete_student' student.roll_no %}">DELETE</a></th>
+
+
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'add_student' %}"><button class="btn btn-success" style="margin-left:4.5%">ADD STUDENT</button></a>
+{% endblock %}

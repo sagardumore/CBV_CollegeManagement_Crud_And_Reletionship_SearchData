@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}
+    <title>Show Professor Page</title>
+{% endblock %}
+
+{% block search %}
+    <ul class="navbar-nav ml-auto ">
+        <form method="post" class="form-inline" style="margin-right:auto">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="search" name="search1" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success " type="submit">Professor</button>
+        </form>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center;color:blue">Professor info</h1>
+    <table class="table-active" style="width:90%;margin:auto">
+        <tr >
+            <th>DEPARTMENT ID</th>
+            <th>PROFESSOR NAME</th>
+            <th>SALARY</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+
+        </tr>
+        {% for professor in professor_obj %}
+            <tr >
+                <td>
+                    {% for dept in professor.department_id.all %}
+                      {{ dept.department_name }}
+                    {% endfor %}
+                </td>
+                <td>{{professor.Professor_name}}</td>
+                <td>{{professor.salary}}</td>
+                <th><a href="{% url 'update_professor' professor.Professor_name %}">UPDATE</a></th>
+                <th><a href="{% url 'delete_professor' professor.Professor_name %}">DELETE</a></th>
+
+
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{% url 'add_professor' %}"><button class="btn btn-success" style="margin-left:4.5%">ADD PROFESSOR</button></a>
+{% endblock %}

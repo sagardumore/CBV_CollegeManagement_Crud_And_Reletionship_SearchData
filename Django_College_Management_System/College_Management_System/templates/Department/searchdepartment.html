@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}
+    <title>Show Department info</title>
+{% endblock %}
+{% block search %}
+    <ul class="navbar-nav ml-auto ">
+        <form method="post" class="form-inline" style="margin-right:auto">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" type="search" name="search1" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success " type="submit">Department</button>
+        </form>
+    </ul>
+{% endblock %}
+{% block content %}
+<div class="container" style="background-color:lightgray;margin-top:4%">
+    <h2 style="text-align:center;">Department Details</h2>
+    <table class="bg-info" style="width:90%;margin:auto">
+        <tr >
+            <th>Department ID</th>
+            <th>Department Name</th>
+            <th>SUBJECT</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        {% for dept in department %}
+            <tr >
+                <td>{{dept.department_id}}</td>
+                <td>{{dept.department_name}}</td>
+                <td>{{dept.subject}}</td>
+                <td><a href="{% url 'update_department' dept.department_id %}"><button class="btn btn-warning">Update</button></a></td>
+                <td><a href="{% url 'delete_department' dept.department_id %}"><button class="btn btn-danger">Delete</button></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+   <br>
+   <br>
+    <h2 style="text-align:center">Professors in department</h2>
+    <table class="bg-info" style="width:90%;margin:auto">
+        <tr >
+            <th>Department ID</th>
+            <th>Professor Name</th>
+            <th>Salary</th>
+        </tr>
+        {% for professor in professor %}
+            <tr >
+                <td>
+                    {% for dept in professor.department_id.all %}
+                    {{ dept.department_id }}
+                      {{ dept.department_name }},
+                    {% endfor %}
+                </td>
+                <td>{{professor.Professor_name}}</td>
+                <td>{{professor.salary}} LPA</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    <h2 style="text-align:center">Students in Department</h2>
+    <table class="bg-info" style="width:90%;margin:auto">
+        <tr >
+            <th>DEPARTMENT ID</th>
+            <th>ROLL NO</th>
+            <th>NAME</th>
+            <th>MARKS</th>
+        </tr>
+        {% for student in student %}
+            <tr >
+                <td>{{student.department_id}}</td>
+                <td>{{student.roll_no}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.marks}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</div>
+{% endblock %}
