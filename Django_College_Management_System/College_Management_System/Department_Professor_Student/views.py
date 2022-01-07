@@ -82,6 +82,13 @@ class ShowProfessorView(View):
         context = {'professor_obj': professor_obj}
         return render(request, template_name, context)
 
+    def post(self, request):
+        professor_obj = Professor.objects.filter(Professor_name__icontains=request.POST['search1'])
+        template_name = "Professor/showprofessorinfo.html"
+        context = {'professor_obj': professor_obj}
+        return render(request, template_name, context)
+
+
 class ProfessorUpdateView(View):
     def get(self, request, i):
         professor = Professor.objects.get(Professor_name=i)
@@ -130,6 +137,13 @@ class ShowStudentView(View):
         template_name = 'Student/showstudentinfo.html'
         context = {'student_obj': student_obj}
         return render(request, template_name, context)
+
+    def post(self, request):
+        student_obj = Student.objects.filter(name__icontains=request.POST['search1'])
+        template_name = "Student/showstudentinfo.html"
+        context = {'student_obj': student_obj}
+        return render(request, template_name, context)
+
 
 class StudentUpdateView(View):
     def get(self, request, i):
